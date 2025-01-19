@@ -45,7 +45,6 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       break;
     default:
       builder = (ctx) => const StartQuizScreen();
-      name = "Home";
       break;
   }
 
