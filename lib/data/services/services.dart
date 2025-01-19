@@ -5,11 +5,11 @@ class Services {
   final Dio _dio = Dio();
   final url = 'https://api.jsonserve.com/Uw5CrX';
 
-  Future<Quiz?> getQuestions() async {
+  Future<QuizModel?> getQuestions() async {
     try {
       final response = await _dio.get(url);
       if (response.statusCode == 200) {
-        return Quiz.fromJson(response.data);
+        return QuizModel.fromJson(response.data);
       } else {
         throw Exception('Failed to load data');
       }

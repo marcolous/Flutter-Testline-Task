@@ -1,4 +1,4 @@
-class Quiz {
+class QuizModel {
   final int? id;
   final String? name;
   final String? title;
@@ -35,7 +35,7 @@ class Quiz {
   final List<Question>? questions;
   final int? progress;
 
-  Quiz({
+  QuizModel({
     this.id,
     this.name,
     this.title,
@@ -73,8 +73,8 @@ class Quiz {
     this.progress,
   });
 
-  factory Quiz.fromJson(Map<String, dynamic> json) {
-    return Quiz(
+  factory QuizModel.fromJson(Map<String, dynamic> json) {
+    return QuizModel(
       id: json['id'] ?? 0,
       name: json['name'] ?? '',
       title: json['title'] ?? '',
