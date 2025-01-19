@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:testline_task/data/services/services.dart';
 import 'package:testline_task/ui/attempt_summary/attempt_summary.dart';
+import 'package:testline_task/ui/quiz_question/quiz_question_cubit.dart';
 import 'package:testline_task/ui/quiz_question/quiz_question_screen.dart';
 import 'package:testline_task/ui/start_quiz/start_quiz_screen.dart';
 
@@ -18,11 +21,14 @@ class Testline extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return MaterialApp(
-          onGenerateRoute: (settings) => generateRoute(settings),
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData.dark(),
-          home: const StartQuizScreen(),
+        return BlocProvider(
+          create: (context) => QuizQuestionCubit(Services())..fetchQuiz(),
+          child: MaterialApp(
+            onGenerateRoute: (settings) => generateRoute(settings),
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData.dark(),
+            home: const StartQuizScreen(),
+          ),
         );
       },
     );

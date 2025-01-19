@@ -18,7 +18,7 @@ class QuizModel {
   final bool? lockSolutions;
   final bool? isForm;
   final bool? showMasteryOption;
-  final dynamic readingMaterial;
+  final ReadingMaterial? readingMaterial;
   final String? quizType;
   final bool? isCustom;
   final dynamic bannerId;
@@ -31,7 +31,7 @@ class QuizModel {
   final int? questionsCount;
   final String? dailyDate;
   final int? maxMistakeCount;
-  final List<dynamic>? readingMaterials;
+  final List<ReadingMaterial>? readingMaterials;
   final List<Question>? questions;
   final int? progress;
 
@@ -81,42 +81,44 @@ class QuizModel {
       description: json['description'] ?? '',
       difficultyLevel: json['difficulty_level'] ?? '',
       topic: json['topic'] ?? '',
-      time:
-          json['time'] != null ? DateTime.parse(json['time']) : DateTime.now(),
+      time: json['time'] != null ? DateTime.tryParse(json['time']) : null,
       isPublished: json['is_published'] ?? false,
       createdAt: json['created_at'] != null
-          ? DateTime.parse(json['created_at'])
-          : DateTime.now(),
+          ? DateTime.tryParse(json['created_at'])
+          : null,
       updatedAt: json['updated_at'] != null
-          ? DateTime.parse(json['updated_at'])
-          : DateTime.now(),
+          ? DateTime.tryParse(json['updated_at'])
+          : null,
       duration: json['duration'] ?? 0,
-      endTime: json['end_time'] != null
-          ? DateTime.parse(json['end_time'])
-          : DateTime.now(),
-      negativeMarks: json['negative_marks'] ?? '0.0',
-      correctAnswerMarks: json['correct_answer_marks'] ?? '0.0',
+      endTime:
+          json['end_time'] != null ? DateTime.tryParse(json['end_time']) : null,
+      negativeMarks: json['negative_marks']?.toString() ?? '0.0',
+      correctAnswerMarks: json['correct_answer_marks']?.toString() ?? '0.0',
       shuffle: json['shuffle'] ?? false,
       showAnswers: json['show_answers'] ?? false,
       lockSolutions: json['lock_solutions'] ?? false,
       isForm: json['is_form'] ?? false,
       showMasteryOption: json['show_mastery_option'] ?? false,
-      readingMaterial: json['reading_material'] ?? ReadingMaterial(),
+      readingMaterial: json['reading_material'] != null
+          ? ReadingMaterial.fromJson(json['reading_material'])
+          : null,
       quizType: json['quiz_type'] ?? '',
       isCustom: json['is_custom'] ?? false,
       bannerId: json['banner_id'],
       examId: json['exam_id'],
       showUnanswered: json['show_unanswered'] ?? false,
-      endsAt: json['ends_at'] != null
-          ? DateTime.parse(json['ends_at'])
-          : DateTime.now(),
+      endsAt:
+          json['ends_at'] != null ? DateTime.tryParse(json['ends_at']) : null,
       lives: json['lives'],
       liveCount: json['live_count'] ?? 'Free Test',
       coinCount: json['coin_count'] ?? -1,
       questionsCount: json['questions_count'] ?? 0,
       dailyDate: json['daily_date'] ?? '',
       maxMistakeCount: json['max_mistake_count'] ?? 0,
-      readingMaterials: json['reading_materials'] ?? [],
+      readingMaterials: json['reading_materials'] != null
+          ? List<ReadingMaterial>.from(
+              json['reading_materials'].map((x) => ReadingMaterial.fromJson(x)))
+          : [],
       questions: json['questions'] != null
           ? List<Question>.from(
               json['questions'].map((x) => Question.fromJson(x)))
@@ -193,11 +195,11 @@ class Question {
       topic: json['topic'] ?? '',
       isPublished: json['is_published'] ?? false,
       createdAt: json['created_at'] != null
-          ? DateTime.parse(json['created_at'])
-          : DateTime.now(),
+          ? DateTime.tryParse(json['created_at'])
+          : null,
       updatedAt: json['updated_at'] != null
-          ? DateTime.parse(json['updated_at'])
-          : DateTime.now(),
+          ? DateTime.tryParse(json['updated_at'])
+          : null,
       detailedSolution: json['detailed_solution'] ?? '',
       type: json['type'] ?? '',
       isMandatory: json['is_mandatory'] ?? false,
@@ -205,9 +207,8 @@ class Question {
       pyqLabel: json['pyq_label'] ?? '',
       topicId: json['topic_id'] ?? 0,
       readingMaterialId: json['reading_material_id'] ?? 0,
-      fixedAt: json['fixed_at'] != null
-          ? DateTime.parse(json['fixed_at'])
-          : DateTime.now(),
+      fixedAt:
+          json['fixed_at'] != null ? DateTime.tryParse(json['fixed_at']) : null,
       fixSummary: json['fix_summary'] ?? '',
       createdBy: json['created_by'],
       updatedBy: json['updated_by'] ?? '',
@@ -223,7 +224,7 @@ class Question {
           : [],
       readingMaterial: json['reading_material'] != null
           ? ReadingMaterial.fromJson(json['reading_material'])
-          : ReadingMaterial(),
+          : null,
     );
   }
 }
@@ -256,11 +257,11 @@ class Option {
       questionId: json['question_id'] ?? 0,
       isCorrect: json['is_correct'] ?? false,
       createdAt: json['created_at'] != null
-          ? DateTime.parse(json['created_at'])
-          : DateTime.now(),
+          ? DateTime.tryParse(json['created_at'])
+          : null,
       updatedAt: json['updated_at'] != null
-          ? DateTime.parse(json['updated_at'])
-          : DateTime.now(),
+          ? DateTime.tryParse(json['updated_at'])
+          : null,
       unanswered: json['unanswered'] ?? false,
       photoUrl: json['photo_url'] ?? '',
     );
@@ -269,7 +270,7 @@ class Option {
 
 class ReadingMaterial {
   final int? id;
-  final List<String>? keywords;
+  final String? keywords;
   final dynamic content;
   final DateTime? createdAt;
   final DateTime? updatedAt;
@@ -289,40 +290,43 @@ class ReadingMaterial {
   factory ReadingMaterial.fromJson(Map<String, dynamic> json) {
     return ReadingMaterial(
       id: json['id'] ?? 0,
-      keywords:
-          json['keywords'] != null ? List<String>.from(json['keywords']) : [],
+      keywords: json['keywords'] ?? '',
       content: json['content'],
       createdAt: json['created_at'] != null
-          ? DateTime.parse(json['created_at'])
-          : DateTime.now(),
+          ? DateTime.tryParse(json['created_at'])
+          : null,
       updatedAt: json['updated_at'] != null
-          ? DateTime.parse(json['updated_at'])
-          : DateTime.now(),
+          ? DateTime.tryParse(json['updated_at'])
+          : null,
       contentSections: json['content_sections'] != null
           ? List<String>.from(json['content_sections'])
           : [],
       practiceMaterial: json['practice_material'] != null
           ? PracticeMaterial.fromJson(json['practice_material'])
-          : PracticeMaterial(),
+          : null,
     );
   }
 }
 
 class PracticeMaterial {
-  final List<String>? content;
-  final List<String>? keywords;
+  final dynamic id;
+  final dynamic name;
+  final List<dynamic>? practiceQuestions;
+  final bool isPublished;
 
   PracticeMaterial({
-    this.content,
-    this.keywords,
+    this.id,
+    this.name,
+    this.practiceQuestions,
+    this.isPublished = false,
   });
 
   factory PracticeMaterial.fromJson(Map<String, dynamic> json) {
     return PracticeMaterial(
-      content:
-          json['content'] != null ? List<String>.from(json['content']) : [],
-      keywords:
-          json['keywords'] != null ? List<String>.from(json['keywords']) : [],
+      id: json['id'],
+      name: json['name'],
+      practiceQuestions: json['practice_questions'] ?? [],
+      isPublished: json['is_published'] ?? false,
     );
   }
 }

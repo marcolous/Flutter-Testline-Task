@@ -21,4 +21,13 @@ class AppStyle {
       fontFamily: fontFamily,
     );
   }
+
+  static TextStyle style30GreyMedium() {
+    return TextStyle(
+      fontSize: 30.sp,
+      fontWeight: FontWeight.w500,
+      color: Colors.grey[800],
+      fontFamily: fontFamily,
+    );
+  }
 }

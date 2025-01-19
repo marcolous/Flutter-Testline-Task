@@ -7,11 +7,14 @@ class QuizQuestionCubit extends Cubit<QuizQuestionState<QuizModel>> {
   final Services _services;
 
   QuizQuestionCubit(this._services)
-      : super(QuizQuestionState(isQuizLoading: false, quiz: QuizModel()));
+      : super(QuizQuestionState(
+          isQuizLoading: false,
+          quiz: QuizModel(),
+          selectedOptions: {},
+        ));
 
   Future<void> fetchQuiz() async {
     emit(state.copyWith(isQuizLoading: true));
-
     try {
       final quiz = await _services.getQuestions();
 
@@ -25,5 +28,37 @@ class QuizQuestionCubit extends Cubit<QuizQuestionState<QuizModel>> {
     } finally {
       emit(state.copyWith(isQuizLoading: false));
     }
+  }
+
+  void questionIndex(int index) {
+    emit(state.copyWith(currentQuestionIndex: index));
+  }
+
+  void selectOption(int questionIndex, String option) {
+    final updatedSelectedOptions = Map<int, String>.from(state.selectedOptions);
+    updatedSelectedOptions[questionIndex] = option;
+    emit(state.copyWith(selectedOptions: updatedSelectedOptions));
+  }
+
+  void finishQuiz() {
+    emit(state.copyWith(
+      selectedOptions: {},
+      score: 0,
+      currentQuestionIndex: 0,
+    ));
+  }
+
+  void scoreQuiz() {
+    final selectedOptions = state.selectedOptions;
+    final questions = state.quiz.questions;
+    int score = 0;
+    for (int i = 0; i < questions!.length; i++) {
+      for (Option option in questions[i].options!) {
+        if (option.isCorrect! && selectedOptions[i] == option.description) {
+          score++;
+        }
+      }
+    }
+    emit(state.copyWith(score: score));
   }
 }
