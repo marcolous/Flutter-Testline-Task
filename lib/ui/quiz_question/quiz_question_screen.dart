@@ -6,6 +6,7 @@ import 'package:testline_task/models/question_model.dart';
 import 'package:testline_task/ui/attempt_summary/attempt_summary.dart';
 import 'package:testline_task/ui/quiz_question/quiz_question_cubit.dart';
 import 'package:testline_task/ui/quiz_question/quiz_question_state.dart';
+import 'package:testline_task/utils/app_style.dart';
 import 'package:testline_task/utils/widgets/default_app_bar.dart';
 import 'package:testline_task/utils/widgets/default_app_button.dart';
 
@@ -75,7 +76,7 @@ class _QuizQuestionScreenState extends State<QuizQuestionScreen> {
                     Text(
                       question.description ?? 'No Description',
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 16.sp),
+                      style: AppStyle.style16Medium(),
                     ),
                     Gap(20.h),
                     if (question.options != null)
@@ -94,7 +95,7 @@ class _QuizQuestionScreenState extends State<QuizQuestionScreen> {
                             ),
                             child: Text(
                               option.description ?? '',
-                              style: TextStyle(fontSize: 14.sp),
+                              style: AppStyle.style14Medium(),
                             ),
                           ),
                         );

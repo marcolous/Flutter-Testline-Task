@@ -38,7 +38,19 @@ class NextPrevButton extends StatelessWidget {
         minimumSize: Size(40.w, 40.w),
         backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5.r),
+          borderRadius: isPrev
+              ? BorderRadius.only(
+                  topRight: Radius.circular(5.r),
+                  bottomRight: Radius.circular(5.r),
+                  topLeft: Radius.circular(50.r),
+                  bottomLeft: Radius.circular(50.r),
+                )
+              : BorderRadius.only(
+                  topRight: Radius.circular(50.r),
+                  bottomRight: Radius.circular(50.r),
+                  topLeft: Radius.circular(5.r),
+                  bottomLeft: Radius.circular(5.r),
+                ),
         ),
       ),
       onPressed: onPressed,
