@@ -41,7 +41,7 @@ class _QuizQuestionScreenState extends State<QuizQuestionScreen> {
         return Scaffold(
           appBar: DefaultAppBar(
               title:
-                  '${state.currentQuestionIndex + 1} / ${state.quiz.questions?.length} Questions'),
+                  '${state.currentQuestionIndex + 1} / ${state.quiz.questions?.length ?? 0} Questions'),
           body: _buildBody(state),
         );
       },
